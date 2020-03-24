@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>评论</title>
+</head>
+<body>
+    <button type="button" class="btn btn-secondary" οnclick="hide('#{specificReview.RId}')">回复</button>  <br />
+    <p class="cContent">#{specificReview.RComments}</p>   <!--每个人回复的评论 -->  <br />
+ 
+    <div class="comment-edit" id="#{specificReview.RId}" style=" display: none;">
+    <h:inputTextarea id="doubleComments"
+                     class="form-control edit"
+                     value="#{comment.RDComments}"                                
+                     />
+    <!--<h:message for="doubleComments" style="color:red"/>-->
+    <div class="preview">
+        <div class="buttons">
+            <h:commandButton immediate="true" class="btn btn-secondary" rendered="#{!login.isLogin()}" value="评论前请先登录" action="#{navBean.login}" />
+            <h:commandButton id="submitButton" rendered="#{login.isLogin()}" actionListener="#{discuss.setTopic(discuss.topic)}"  action="#{comment.storeIntoDB(discuss.topic.TId, specificReview.RId, login.userName, specificReview.ROwnerName)}" class="btn btn-primary post broadcast" value="回复"/>                
+        </div>
+    </div>
+</div>
+</body>
+</html>

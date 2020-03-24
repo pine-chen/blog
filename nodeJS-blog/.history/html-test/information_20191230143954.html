@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>个人资料</title>
+    <style type="text/css">
+        body {
+            margin: 0 20px;
+            line-height: 1;
+        }
+    </style>
+</head>
+<body>
+    <h1 style="border-bottom: 1px solid #ccc; padding-bottom: 10px;">个人资料</h1>
+
+    <div>
+        <label>
+            用户名 <input type="text" id="textUsername" value="username"/>
+        </label>
+        <label>
+            旧密码 <input type="password" id="textOldPassword" placeholder="请输入旧密码"/>
+        </label>
+        <label>
+            新密码 <input type="password" id="textNewPassword" placeholder="请输入新密码"/>
+        </label>
+        <label>
+            个人简介 <input type="text" id="textInformation" value="information"/>
+        </label>
+        <button id="btnUpdate">确认更新</button>
+    </div>
+
+
+
+    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.js"></script>
+    <script>
+        // 发送 post 请求
+        function post(url, data = {}) {
+            return $.ajax({
+                type: 'post',
+                url,
+                data: JSON.stringify(data),
+                contentType: "application/json",
+            })
+        }
+
+        $('#btnUpdate').click(() => {
+            const username = $('#textUsername').val()
+            const oldPassword = $('#textOldPassword').val()
+            const newPassword = $('#textNewPassword').val()
+            const information = $('#textInformation').val()
+            const url = '/api/user/info'
+            const data = {
+                username,
+                oldPassword,
+                newPassword,
+                information
+            }
+            post(url, data).then(res => {
+                if (res.errno === 1) {
+                    //更新成功
+                    location.href = './information.html'
+                } else {
+                    // 更新失败
+                    alert(res.message)
+                }
+            })
+        })
+        
+        console.log('session:', session.username, session.information)
+    </script>
+</body>
+</html>

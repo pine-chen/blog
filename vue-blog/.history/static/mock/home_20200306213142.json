@@ -1,0 +1,101 @@
+{
+    "errno": 1,
+    "data": [
+        {
+            "id": 1,
+            "title": "内存泄露分析",
+            "content": "如何判断是否有内存泄露，方法一：打开chrome浏览器面板performance monitor，实时查看内存占用
+            如果一段时间内，内存持续稳定攀升，就有内存泄漏。这就要求实时查看内存占用。
+            复制代码
+            方法二：利用node命令行
+            
+            process.memoryUsage() // 输出内存占用情况，字段如下
+            
+            > rss（resident set size）：所有内存占用，包括指令区和堆栈。
+            > heapTotal："堆"占用的内存，包括用到的和没用到的。
+            > heapUsed：用到的堆的部分。
+            > external： V8 引擎内部的 C++ 对象占用的内存
+            复制代码
+            判断内存占用情况，以 heapUsed为基准。
+            方法三：在html中周期性输出当前内存大小
+            // 周期性观察输出的内存是否有变化
+            setInterval(()=>{
+                console.log(window.performance.memory);
+            },2000)
+            复制代码
+            window.performance.memory：输出当前内存属性
+            
+            
+            
+            usedJsHeapSize是内存总数：指的是JS对象占用的内存，包括V8内部对象。
+            totalJsHeapSize是当前内存总数：指的是JS堆的占用的内存，包括任意js对象的空闲内存。",
+            "author": "^_^在掘金",
+            "time": "2020.01.03",
+            "tags": [
+                "标签一",
+                "标签二",
+                "标签三"
+            ]
+        },
+        {
+            "id": 2,
+            "title": "标题二",
+            "content": "内容二",
+            "author": "作者二",
+            "time": "2020.01.03",
+            "tags": [
+                "标签四",
+                "标签五",
+                "标签六"
+            ]
+        },
+        {
+            "id": 3,
+            "title": "标题三",
+            "content": "内容三",
+            "author": "作者三",
+            "time": "2020.01.03",
+            "tags": [
+                "标签七",
+                "标签八",
+                "标签九"
+            ]
+        },
+        {
+            "id": 4,
+            "title": "标题三",
+            "content": "内容三",
+            "author": "作者三",
+            "time": "2020.01.03",
+            "tags": [
+                "标签七",
+                "标签八",
+                "标签九"
+            ]
+        },
+        {
+            "id": 5,
+            "title": "标题三",
+            "content": "内容三",
+            "author": "作者三",
+            "time": "2020.01.03",
+            "tags": [
+                "标签七",
+                "标签八",
+                "标签九"
+            ]
+        },
+        {
+            "id": 6,
+            "title": "标题三",
+            "content": "内容三",
+            "author": "作者三",
+            "time": "2020.01.03",
+            "tags": [
+                "标签七",
+                "标签八",
+                "标签九"
+            ]
+        }
+    ]
+}

@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>个人资料</title>
+    <style type="text/css">
+        body {
+            margin: 0 20px;
+            line-height: 1;
+        }
+    </style>
+</head>
+<body>
+    <h1 style="border-bottom: 1px solid #ccc; padding-bottom: 10px;">个人资料</h1>
+
+    <div>
+        <label>
+            <img src="default.png" id="imga"><br><br>
+            <input type="file" id="inputa"><br><br><br>
+            <button id="buta">上传</button>
+        </label><br><br><br>
+        <label>
+            昵称 <input type="text" id="textNickname" value="username"/>
+        </label><br>
+        <label>
+            旧密码 <input type="password" id="textOldPassword" placeholder="请输入旧密码"/>
+        </label><br>
+        <label>
+            新密码 <input type="password" id="textNewPassword" placeholder="请输入新密码"/>
+        </label><br>
+        <label>
+            年龄 <input type="number" id="textAge" value="22" />
+        </label><br>
+        <label>
+            邮箱 <input type="email" id="textEmail" value="1412223531@qq.com" />
+        </label><br>
+        <label>
+            电话 <input type="tel" id="textTel" value="13866895797" />
+        </label><br>
+        <label>
+            个人简介 <input type="text" id="textInformation" value="information"/>
+        </label><br>
+        <button id="btnUpdate">确认更新</button>
+    </div>
+
+
+
+    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.js"></script>
+    <script>
+       //数取数据到value处
+        // 发送 post 请求
+        function post(url, data = {}) {
+            return $.ajax({
+                type: 'post',
+                url,
+                data: JSON.stringify(data),
+                contentType: "application/json",
+            })
+        }
+
+        var buta=document.getElementById('buta');
+        var inputa=document.getElementById('inputa');
+        $('#buta').click(() => {
+            const photoData = inputa.files[0]
+            const photo = new FormData()
+            photo.append('imageIcon', photoData)
+            console.log('photoData:', photo)  
+        })
+
+        var imga=document.getElementById('imga');
+        var buta=document.getElementById('buta');
+        var inputa=document.getElementById('inputa');
+        // 3.当点击button时，调用ajax上传图片
+        buta.οnclick=function(){
+        // 2.获取上传的数据
+        var getData=inputa.files[0];
+        // 2.1创建格式化数据，
+        var fd=new FormData();
+        // 2.2格式化数据并以键值对的形式存放到fd对象中
+        fd.append('imageIcon',getData);
+        
+        
+
+        $('#btnUpdate').click(() => {
+
+
+            const nickname = $('#textNickname').val()
+            const oldPassword = $('#textOldPassword').val()
+            const newPassword = $('#textNewPassword').val()
+            const age = $('#textAge').val()
+            const email = $('#textEmail').val()
+            const telephone = $('#textTel').val()
+            const information = $('#textInformation').val()
+            const url = '/api/user/info'
+            const data = {
+                photo,
+                nickname,
+                oldPassword,
+                newPassword,
+                age,
+                email,
+                telephone,
+                information
+            }
+            post(url, data).then(res => {
+                if (res.errno === 1) {
+                    //更新成功
+                    location.href = './information.html'
+                } else {
+                    // 更新失败
+                    alert(res.message)
+                }
+            })
+        })
+    </script>
+</body>
+</html>
